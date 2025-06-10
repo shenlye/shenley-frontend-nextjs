@@ -2,6 +2,25 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/theme-toggle";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { SettingsIcon } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ThemeSelector } from "@/components/theme-selector";
+import { SidebarNav } from "@/components/sidebar-nav";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,7 +52,45 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SidebarProvider>
+            <div className="flex h-full w-full">
+              <Sidebar>
+                <SidebarHeader className="flex items-start border-b justify-center h-14">
+                  <span className="text-lg font-bold pl-4">Shenlyy的主页</span>
+                </SidebarHeader>
+                <SidebarContent className="p-4">
+                  <SidebarNav />
+                </SidebarContent>
+                <SidebarFooter className="border-t p-4">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-full px-4 py-2">
+                        <SettingsIcon className="h-5 w-5" />
+                        <span className="ml-2">设置</span>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="">
+                      <DialogHeader>
+                        <DialogTitle>主题设置</DialogTitle>
+                      </DialogHeader>
+                      <div className="grid gap-4 py-4">
+                        <ThemeSelector />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </SidebarFooter>
+              </Sidebar>
+              <div className="flex flex-1 flex-col">
+                <header className="flex h-14 items-center justify-between border-b px-6">
+                  <SidebarTrigger />
+                  <ModeToggle />
+                </header>
+                <main className="flex-1 p-6">
+                  {children}
+                </main>
+              </div>
+            </div>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>
