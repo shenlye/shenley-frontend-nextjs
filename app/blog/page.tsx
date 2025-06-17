@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { format } from "date-fns";
-import { zhCN } from "date-fns/locale";
+import BlogPosts from "@/components/BlogPosts";
 
 interface BlogPost {
   id: string;
@@ -77,51 +69,7 @@ export default async function BlogPage() {
       {posts.length === 0 ? (
         <p className="text-muted-foreground">暂无文章</p>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          {posts.map((post) => (
-            <a
-              key={post.id}
-              href={post.id}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:no-underline"
-            >
-              <Card className="h-full flex flex-col bg-transparent border-none shadow-none hover:bg-accent transition-colors">
-                <CardHeader>
-                  <CardTitle className="text-xl line-clamp-2">
-                    {post.title}
-                  </CardTitle>
-                  <div className="flex items-center gap-4">
-                    {post.published && (
-                      <div className="text-sm text-muted-foreground">
-                        {format(new Date(post.published), "yyyy年MM月dd日", {
-                          locale: zhCN,
-                        })}
-                      </div>
-                    )}
-                    {post.category && (
-                      <span className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground">
-                        {post.category}
-                      </span>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="pb-2">
-                  <p className="text-muted-foreground line-clamp-3">
-                    {post.summary.replace(/<[^>]*>?/gm, "")}
-                  </p>
-                </CardContent>
-                <CardFooter className="mt-auto">
-                  <div className="w-full">
-                    <span className="inline-flex items-center text-sm font-medium text-primary">
-                      阅读全文 <span className="ml-1">→</span>
-                    </span>
-                  </div>
-                </CardFooter>
-              </Card>
-            </a>
-          ))}
-        </div>
+        <BlogPosts posts={posts} />
       )}
     </div>
   );
