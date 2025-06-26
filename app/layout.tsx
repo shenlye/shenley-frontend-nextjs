@@ -22,7 +22,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <PageTransition key={pathname}>{children}</PageTransition>
+          <main className="">
+            <PageTransition key={pathname}>{children}</PageTransition>
+          </main>
         </ThemeProvider>
       </body>
     </html>

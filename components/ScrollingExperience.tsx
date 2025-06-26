@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Avatar from "./avatar";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -124,7 +124,9 @@ const ScrollingExperience = () => {
           </div>
 
           <div ref={avatarContainerRef} className="order-1">
-            <Avatar src="/avatar.jpg" />
+            <Avatar className="size-48 md:size-64">
+              <AvatarImage src="/avatar.jpg" alt="Shenley" />
+            </Avatar>
           </div>
         </section>
 
@@ -142,7 +144,13 @@ const ScrollingExperience = () => {
                 },
                 {
                   title: "前端开发",
-                  items: ["react", "nextjs", "typescript", "tailwindcss", "astro"],
+                  items: [
+                    "react",
+                    "nextjs",
+                    "typescript",
+                    "tailwindcss",
+                    "astro",
+                  ],
                 },
                 {
                   title: "后端开发",
@@ -150,7 +158,14 @@ const ScrollingExperience = () => {
                 },
                 {
                   title: "工具 & 其他",
-                  items: ["github", "docker", "webstorm", "vscode", "md", "pnpm"],
+                  items: [
+                    "github",
+                    "docker",
+                    "webstorm",
+                    "vscode",
+                    "md",
+                    "pnpm",
+                  ],
                 },
               ].map((category, i) => (
                 <div
