@@ -2,6 +2,12 @@ import type { BangumiSubject } from "@/types/bangumi";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface CollectionListProps {
   items: BangumiSubject[];
@@ -19,6 +25,44 @@ export default function CollectionList({
   onLoadMore,
 }: CollectionListProps) {
   const observer = useRef<IntersectionObserver | null>(null);
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const updateItemRef = (index: number) => (node: HTMLDivElement | null) => {
+    itemsRef.current[index] = node;
+  };
+
+  useEffect(() => {
+    if (items.length === 0 || loading) return;
+
+    const itemElements = itemsRef.current.filter(Boolean);
+
+    gsap.set(itemElements, {
+      opacity: 0,
+      y: 30,
+      scale: 0.95,
+    });
+
+    itemElements.forEach((item) => {
+      gsap.to(item, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.5,
+        ease: "power2.out",
+        delay: 0.1,
+        scrollTrigger: {
+          trigger: item,
+          start: "top bottom-=100",
+          toggleActions: "play none none none",
+        },
+      });
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [items, loading]);
+
   const loadMoreRef = useCallback(
     (node: HTMLDivElement) => {
       if (loading) return;
@@ -26,13 +70,12 @@ export default function CollectionList({
 
       observer.current = new IntersectionObserver(
         (entries) => {
-          // 只有当元素可见、有更多数据、不在加载中、且存在加载更多函数时才触发
           if (entries[0].isIntersecting && hasMore && !loading && onLoadMore) {
             onLoadMore();
           }
         },
         {
-          rootMargin: "0px 0px 300px 0px",
+          rootMargin: "0px 0px 1px 0px",
         }
       );
 
@@ -41,7 +84,6 @@ export default function CollectionList({
     [loading, hasMore, onLoadMore]
   );
 
-  // 当组件卸载时断开观察器连接
   useEffect(() => {
     return () => {
       if (observer.current) {
@@ -50,7 +92,6 @@ export default function CollectionList({
     };
   }, []);
 
-  // 初始加载时显示骨架屏
   if (items.length === 0 && loading) {
     return (
       <div className="space-y-4 px-4">
@@ -72,7 +113,6 @@ export default function CollectionList({
     );
   }
 
-  // 没有数据时显示提示
   if (items.length === 0) {
     return <p className="mt-4 text-muted-foreground">暂无数据</p>;
   }
@@ -80,12 +120,12 @@ export default function CollectionList({
   return (
     <>
       <div className="space-y-4 max-w-2xl mx-auto px-4">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <div
             key={item.id}
+            ref={updateItemRef(index)}
             className="flex border rounded-md p-4 hover:bg-accent/10 transition-colors duration-200"
           >
-            {/* 左侧图片 */}
             <Link
               href={item.url || "#"}
               target="_blank"
@@ -107,9 +147,7 @@ export default function CollectionList({
               )}
             </Link>
 
-            {/* 右侧信息 */}
             <div className="ml-4 flex-1">
-              {/* 标题 */}
               <Link href={item.url || "#"} target="_blank" className="block">
                 <h3 className="font-medium text-lg hover:text-primary">
                   {item.name_cn || item.name || "无标题"}
@@ -119,7 +157,6 @@ export default function CollectionList({
                 )}
               </Link>
 
-              {/* 评分信息 */}
               <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:gap-4">
                 {item.rating?.score ? (
                   <div className="flex items-center">
@@ -139,7 +176,6 @@ export default function CollectionList({
                   </span>
                 )}
 
-                {/* 个人评分 */}
                 <div className="flex items-center mt-1 sm:mt-0">
                   <span className="text-sm text-muted-foreground">
                     我的评分：
@@ -154,7 +190,6 @@ export default function CollectionList({
                 </div>
               </div>
 
-              {/* 评论 */}
               <div className="mt-2">
                 {item.user_comment ? (
                   <p className="text-sm line-clamp-3">
@@ -175,7 +210,6 @@ export default function CollectionList({
         ))}
       </div>
 
-      {/* 加载更多指示器 - 只有在有更多数据时才显示 */}
       {(hasMore || loading) && (
         <div ref={loadMoreRef} className="w-full flex justify-center mt-6 mb-4">
           {loading && (
@@ -188,7 +222,6 @@ export default function CollectionList({
         </div>
       )}
 
-      {/* 没有更多数据时显示提示 */}
       {!hasMore && items.length > 0 && !loading && (
         <p className="text-center text-sm text-muted-foreground mt-6 mb-4">
           已加载全部数据
