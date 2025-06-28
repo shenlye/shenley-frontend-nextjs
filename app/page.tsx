@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import Wakatime from "@/components/wakatime";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
@@ -166,6 +166,8 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      <Wakatime />
     </div>
   );
 }
