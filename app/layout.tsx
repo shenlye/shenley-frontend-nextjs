@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import React from "react";
 import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/animation/PageTransition";

@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/data-display/card";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

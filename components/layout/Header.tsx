@@ -4,9 +4,9 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/navigation/navigation-menu";
 import { usePathname } from "next/navigation";
-import { ModeToggle } from "@/components/theme-toggle";
+import { ModeToggle } from "@/components/theme/theme-toggle";
 import gsap from "gsap";
 export const navItems = [
   {

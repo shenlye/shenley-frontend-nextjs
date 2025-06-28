@@ -1,9 +1,9 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/navigation/tabs";
 import useBangumi from "@/hooks/useBangumi";
 import { CollectionStatus } from "@/types/bangumi";
-import CollectionList from "@/components/ui/CollectionList";
+import CollectionList from "@/components/ui/data-display/CollectionList";
 import { Suspense, use } from "react";
 import { notFound } from "next/navigation";
 

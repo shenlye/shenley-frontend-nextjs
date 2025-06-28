@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/data-display/card";
 import { Icon } from "@iconify/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
