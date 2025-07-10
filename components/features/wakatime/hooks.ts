@@ -17,16 +17,16 @@ export function useWakatimeData() {
           activityResponse,
         ] = await Promise.all([
           fetch(
-            "https://wakatime.com/share/@shenlyy/8d02ee17-0ecd-4e12-8445-7410038faee6.json"
+            "https://wakatime.com/share/@Shenley/f8980a89-14a8-419a-aca5-ee272dff46bb.json"
           ),
           fetch(
-            "https://wakatime.com/share/@shenlyy/60e04848-51df-4f08-b9b0-bc756f621898.json"
+            "https://wakatime.com/share/@Shenley/0828e8a1-401e-4354-a637-ae49890d1e92.json"
           ),
           fetch(
-            "https://wakatime.com/share/@shenlyy/143d7ab6-2d3b-400c-9703-b1cf5e877526.json"
+            "https://wakatime.com/share/@Shenley/11d56100-1d7d-46e9-9a90-c9c248fb360b.json"
           ),
           fetch(
-            "https://wakatime.com/share/@shenlyy/6816b5da-56f8-4537-b5dc-e1ace88a9958.json"
+            "https://wakatime.com/share/@Shenley/77a04ab4-ab45-4921-852a-033060720112.json"
           ),
         ]);
 
