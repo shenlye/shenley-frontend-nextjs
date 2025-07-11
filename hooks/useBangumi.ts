@@ -15,7 +15,7 @@ export default function useBangumi({ type, initialUsername = "shenley" }: UseBan
   const searchParams = useSearchParams();
   const [username] = useState(initialUsername);
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(50);
   const [activeStatus, setActiveStatus] = useState<CollectionStatus>("collect");
   const [hasMore, setHasMore] = useState(true);
   

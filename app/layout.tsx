@@ -2,8 +2,7 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import React from "react";
-import { Header } from "@/components/layout/Header";
-
+import Header from "@/components/layout/Header/Header";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,8 +17,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="">
+          <Header className="mb-8"/>
+          <main className="md:max-w-4xl mx-auto p-2">
             {children}
           </main>
         </ThemeProvider>

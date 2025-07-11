@@ -50,7 +50,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
   }, { scope: postsContainerRef });
 
   return (
-    <div ref={postsContainerRef} className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+    <div ref={postsContainerRef} className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
         <a
           key={post.id}
@@ -64,7 +64,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
           rel="noopener noreferrer"
           className="block hover:no-underline opacity-0"
         >
-          <Card className="h-full flex flex-col bg-transparent border-none shadow-none hover:bg-accent transition-colors">
+          <Card className="h-full flex flex-col bg-transparent shadow-none hover:bg-accent transition-colors">
             <CardHeader>
               <CardTitle className="text-xl line-clamp-2">
                 {post.title}

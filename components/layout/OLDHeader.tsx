@@ -27,7 +27,7 @@ export const navItems = [
   },
 ];
 
-export function Header() {
+export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuMounted, setIsMenuMounted] = useState(false);

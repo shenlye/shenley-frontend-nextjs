@@ -64,7 +64,7 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="">
       <h1 className="text-3xl font-bold mb-8">博客文章</h1>
       {posts.length === 0 ? (
         <p className="text-muted-foreground">暂无文章</p>
