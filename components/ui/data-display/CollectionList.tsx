@@ -1,7 +1,7 @@
 import type { BangumiSubject } from "@/types/bangumi";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,22 +9,47 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const PaginationButton = ({
+  children,
+  onClick,
+  disabled = false,
+  active = false,
+  className = "",
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  active?: boolean;
+  className?: string;
+}) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className={`px-3 py-1 border text-sm ${
+      active
+        ? 'bg-primary text-primary-foreground border-primary'
+        : 'border-input hover:bg-accent hover:text-accent-foreground'
+    } ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+  >
+    {children}
+  </button>
+);
+
 interface CollectionListProps {
   items: BangumiSubject[];
   loading: boolean;
-  pageSize: number;
-  hasMore?: boolean;
-  onLoadMore?: () => void;
+  currentPage: number;
+  hasMore: boolean;
+  onPageChange: (page: number) => void;
 }
 
 export default function CollectionList({
   items,
   loading,
-  pageSize,
-  hasMore = false,
-  onLoadMore,
+  currentPage,
+  hasMore,
+  onPageChange,
 }: CollectionListProps) {
-  const observer = useRef<IntersectionObserver | null>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const updateItemRef = (index: number) => (node: HTMLDivElement | null) => {
@@ -52,7 +77,8 @@ export default function CollectionList({
         delay: 0.1,
         scrollTrigger: {
           trigger: item,
-          start: "top bottom-=100",
+          start: "top bottom", // Start animation when element is 200px from bottom of viewport
+          end: "top center+=300",  // End animation when element's top reaches 100px below center
           toggleActions: "play none none none",
         },
       });
@@ -63,52 +89,37 @@ export default function CollectionList({
     };
   }, [items, loading]);
 
-  const loadMoreRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
 
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && hasMore && !loading && onLoadMore) {
-            onLoadMore();
-          }
-        },
-        {
-          rootMargin: "0px 0px 1px 0px",
-        }
-      );
-
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore, onLoadMore]
-  );
-
-  useEffect(() => {
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-    };
-  }, []);
+  const handleNextPage = () => {
+    onPageChange(currentPage + 1);
+    // Scroll to top of the page
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   if (items.length === 0 && loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2">
-        {[...Array(Math.min(6, pageSize))].map((_, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-2">
+        {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="border rounded-md p-4 h-[160px] animate-pulse"
+            className="border p-4 h-[160px] animate-pulse"
           >
             <div className="flex">
-              <div className="w-[100px] h-[140px] bg-accent rounded-md"></div>
+              <div className="w-[100px] h-[140px] bg-accent"></div>
               <div className="ml-4 flex-1">
                 <div className="h-6 bg-accent rounded w-3/4 mb-2"></div>
                 <div className="h-4 bg-accent rounded w-1/2 mb-2"></div>
                 <div className="h-4 bg-accent rounded w-1/3 mb-2"></div>
               </div>
             </div>
-            <div className="h-8 bg-accent rounded w-full mt-4"></div>
           </div>
         ))}
       </div>
@@ -121,12 +132,15 @@ export default function CollectionList({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-2">
         {items.map((item, index) => (
           <div
             key={item.id}
             ref={updateItemRef(index)}
-            className="border rounded-md p-4 hover:bg-accent/10 transition-colors duration-200 flex flex-col"
+            style={{
+            clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)'
+            }}
+            className="border p-4 hover:bg-accent bg-card transition-colors duration-200 flex flex-col"
           >
             <div className="flex">
               <Link
@@ -141,10 +155,10 @@ export default function CollectionList({
                     width={100}
                     height={140}
                     style={{ height: "auto" }}
-                    className="rounded-md hover:scale-105 transition-transform duration-300 object-cover"
+                    className="hover:scale-105 transition-transform duration-300 object-cover"
                   />
                 ) : (
-                  <div className="w-[100px] h-[140px] flex items-center justify-center rounded-md">
+                  <div className="w-[100px] h-[140px] flex items-center justify-center">
                     无图片
                   </div>
                 )}
@@ -214,23 +228,25 @@ export default function CollectionList({
         ))}
       </div>
 
-      {(hasMore || loading) && (
-        <div ref={loadMoreRef} className="w-full flex justify-center mt-6 mb-4">
-          {loading && (
-            <div className="flex flex-col items-center">
-              <div className="w-8 h-8 border-4 border-t-primary rounded-full animate-spin"></div>
-              <p className="mt-2 text-sm text-muted-foreground">加载中...</p>
-            </div>
-          )}
-          {hasMore && !loading && <div className="h-8" />}
-        </div>
-      )}
-
-      {!hasMore && items.length > 0 && !loading && (
-        <p className="text-center text-sm text-muted-foreground mt-6 mb-4">
-          已加载全部数据
-        </p>
-      )}
+      <div className="flex justify-center items-center gap-2 mt-8 mb-4">
+        <PaginationButton
+          onClick={handlePrevPage}
+          disabled={currentPage <= 1 || loading}
+        >
+          上一页
+        </PaginationButton>
+        
+        <span className="px-4 py-1 text-sm">
+          第 {currentPage} 页
+        </span>
+        
+        <PaginationButton
+          onClick={handleNextPage}
+          disabled={!hasMore || loading}
+        >
+          下一页
+        </PaginationButton>
+      </div>
     </>
   );
 }

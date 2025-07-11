@@ -1,22 +1,21 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/navigation/tabs";
-import useBangumi from "@/hooks/useBangumi";
+import type { BangumiSubject } from "@/types/bangumi";
 import { CollectionStatus } from "@/types/bangumi";
 import CollectionList from "@/components/ui/data-display/CollectionList";
-import { Suspense, use } from "react";
-import { notFound } from "next/navigation";
+import { Suspense, use, useState, useEffect } from "react";
+import { notFound, useSearchParams, useRouter } from "next/navigation";
+import { getUserCollectionsByStatus } from "@/lib/bangumi";
 
 export default function BangumiPage({
   params,
 }: {
   params: Promise<{ type: string }>;
 }) {
-  // 使用React.use()解包params
   const resolvedParams = use(params);
   const type = resolvedParams.type;
 
-  // 验证类型是否有效
   if (type !== "anime" && type !== "game") {
     return notFound();
   }
@@ -29,8 +28,22 @@ export default function BangumiPage({
 }
 
 function BangumiPageContent({ type }: { type: "anime" | "game" }) {
-  const { data, loading, activeStatus, hasMore, setActiveStatus, loadMore } =
-    useBangumi({ type });
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [activeStatus, setActiveStatus] = useState<CollectionStatus>("collect");
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<{
+    collect: BangumiSubject[];
+    wish: BangumiSubject[];
+    doing: BangumiSubject[];
+  }>({ collect: [], wish: [], doing: [] });
+  const [hasMore, setHasMore] = useState({
+    collect: true,
+    wish: true,
+    doing: true
+  });
+  const pageSize = 12;
 
   // 根据类型设置不同的标签文本
   const tabLabels = {
@@ -48,14 +61,71 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
 
   const labels = tabLabels[type];
 
+  // 处理URL参数变化
+  useEffect(() => {
+    const status = searchParams.get('status') as CollectionStatus || 'collect';
+    const pageNum = parseInt(searchParams.get('page') || '1', 10);
+    
+    setActiveStatus(status);
+    setPage(pageNum);
+  }, [searchParams]);
+
+  // 加载数据
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const collectionData = await getUserCollectionsByStatus(
+          'shenley', // 用户名
+          type,
+          activeStatus,
+          page,
+          pageSize
+        );
+
+        setData(prev => ({
+          ...prev,
+          [activeStatus]: collectionData[activeStatus] || []
+        }));
+
+        // 检查是否还有更多数据
+        const currentData = collectionData[activeStatus] || [];
+        setHasMore(prev => ({
+          ...prev,
+          [activeStatus]: currentData.length >= pageSize
+        }));
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [activeStatus, page, type]);
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', newPage.toString());
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const handleStatusChange = (value: string) => {
+    const status = value as CollectionStatus;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('status', status);
+    params.delete('page'); // Reset to first page when changing status
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <div>
+    <div className="container mx-auto px-4 py-6">
       <Tabs
         value={activeStatus}
-        onValueChange={(v) => setActiveStatus(v as CollectionStatus)}
-        className="px-4"
+        onValueChange={handleStatusChange}
+        className="mb-6"
       >
-        <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto mt-4">
+        <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto">
           <TabsTrigger value="collect">{labels.collect}</TabsTrigger>
           <TabsTrigger value="wish">{labels.wish}</TabsTrigger>
           <TabsTrigger value="doing">{labels.doing}</TabsTrigger>
@@ -65,9 +135,9 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
           <CollectionList
             items={data.collect}
             loading={loading}
-            pageSize={10}
-            hasMore={hasMore}
-            onLoadMore={loadMore}
+            currentPage={page}
+            hasMore={hasMore.collect}
+            onPageChange={handlePageChange}
           />
         </TabsContent>
 
@@ -75,9 +145,9 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
           <CollectionList
             items={data.wish}
             loading={loading}
-            pageSize={10}
-            hasMore={hasMore}
-            onLoadMore={loadMore}
+            currentPage={page}
+            hasMore={hasMore.wish}
+            onPageChange={handlePageChange}
           />
         </TabsContent>
 
@@ -85,9 +155,9 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
           <CollectionList
             items={data.doing}
             loading={loading}
-            pageSize={10}
-            hasMore={hasMore}
-            onLoadMore={loadMore}
+            currentPage={page}
+            hasMore={hasMore.doing}
+            onPageChange={handlePageChange}
           />
         </TabsContent>
       </Tabs>
