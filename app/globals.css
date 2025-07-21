@@ -3,10 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body {
-  font-family: "STXihei", "华文细黑";
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

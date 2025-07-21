@@ -6,18 +6,16 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const animationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.fromTo(
+    gsap.from(
       animationRef.current,
       {
+        duration: 0.4,
+        rotationY: -110,
+        rotationX: 0,
+        x: '-=100vw',
         opacity: 0,
-        filter: "blur(16px)",
+        ease: 'expo.inout',
       },
-      {
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.5,
-        ease: "power4.inOut",
-      }
     );
   }, []);
 

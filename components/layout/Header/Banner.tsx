@@ -61,7 +61,7 @@ export default function Banner() {
   }, [currentPage, hoverItem]);
 
   return (
-    <div className="h-20 flex items-center p-2 overflow-hidden w-full justify-between">
+    <div className="h-15 flex items-center p-2 overflow-hidden w-full justify-between sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between h-full">
         <div className="bg-foreground w-2 h-full flex-shrink-0" />
         <div className="ml-2 overflow-hidden">
@@ -74,7 +74,7 @@ export default function Banner() {
       </div>
       </div>
       <div className="cursor-pointer" onClick={() => setTheme(theme === "light" ? "dark" : "light")} >
-        {theme === "light" ? "LIGTH" : "DARK"}
+        {theme === "light" ? "LIGHT" : "DARK"}
       </div>
     </div>
   );

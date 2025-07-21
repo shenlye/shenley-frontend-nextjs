@@ -17,8 +17,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header className="mb-8 bg-slate-100 dark:bg-slate-800"/>
-          <main className="md:max-w-4xl mx-auto p-2">
+          <Header className="mb-4"/>
+          <main className="md:max-w-4xl mx-auto px-2 md:px-0">
             {children}
           </main>
         </ThemeProvider>
