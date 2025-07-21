@@ -1,23 +1,25 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { usePathname } from "next/navigation";
 
-export function PageTransition({ children }: { children: React.ReactNode }) {
+export default function PageTransition({ children }: { children: React.ReactNode }) {
   const animationRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
+  const pathname = usePathname();
+  useGSAP(() => {
     gsap.from(
       animationRef.current,
       {
-        duration: 0.4,
-        rotationY: -110,
-        rotationX: 0,
+        duration: 1,
+        rotationY: 60,
+        scale: 0.5,
         x: '-=100vw',
         opacity: 0,
-        ease: 'expo.inout',
+        ease: 'power4.out',
       },
     );
-  }, []);
+  }, [pathname]);
 
-  return <div ref={animationRef}>{children}</div>;
+  return <div ref={animationRef} className="">{children}</div>;
 }

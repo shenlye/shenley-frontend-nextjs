@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import React from "react";
 import Header from "@/components/layout/Header/Header";
+import PageTransition from "@/components/animation/PageTransition";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,8 +19,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header className="mb-4"/>
-          <main className="md:max-w-4xl mx-auto px-2 md:px-0">
-            {children}
+          <main className="md:max-w-4xl mx-auto px-2 md:px-0 perspective-midrange relative">
+            <PageTransition>
+              {children}
+            </PageTransition>
           </main>
         </ThemeProvider>
       </body>

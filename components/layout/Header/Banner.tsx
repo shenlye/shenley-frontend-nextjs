@@ -61,9 +61,9 @@ export default function Banner() {
   }, [currentPage, hoverItem]);
 
   return (
-    <div className="h-15 flex items-center p-2 overflow-hidden w-full justify-between sticky top-0 z-50 bg-background">
+    <div className="h-15 flex items-center p-2 overflow-hidden md:px-0 justify-between sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between h-full">
-        <div className="bg-foreground w-2 h-full flex-shrink-0" />
+        <div className="bg-foreground w-1 h-full flex-shrink-0" />
         <div className="ml-2 overflow-hidden">
           <div ref={titleRef} className="text-2xl font-bold">
             {currentPage.name}

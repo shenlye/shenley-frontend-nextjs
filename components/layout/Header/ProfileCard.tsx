@@ -76,7 +76,7 @@ export default function ProfileCard({ className = "" }: ProfileCardProps) {
             
             <div 
                 ref={accentBarRef}
-                className="bg-primary w-2 h-32 md:h-40 z-10"
+                className="bg-primary w-1 h-32 md:h-40 z-10"
                 style={{ transform: 'scaleY(0)' }}
             />
             
@@ -92,7 +92,7 @@ export default function ProfileCard({ className = "" }: ProfileCardProps) {
                     className="object-cover w-24 h-24 md:w-32 md:h-32"
                     priority
                 />
-                <div className="pl-4">
+                <div className="pl-4 flex flex-col justify-center gap-1">
                     <h1 className="md:text-2xl text-xl font-bold text-foreground">Shenley</h1>
                     <p className="md:text-sm text-xs pt-2 text-muted-foreground">
                         WRITING CODE IS PASSION, KEEP CODING UNTIL THE WORLD IS FULL

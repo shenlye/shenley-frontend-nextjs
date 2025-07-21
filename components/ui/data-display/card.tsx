@@ -11,7 +11,6 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
       }}
       className={cn(
         "bg-card text-card-foreground flex flex-col gap-6 border py-6 shadow-sm relative pl-4",
-        "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[var(--color-foreground)]",
         className
       )}
       {...props}

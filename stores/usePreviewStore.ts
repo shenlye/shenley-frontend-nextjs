@@ -16,7 +16,7 @@ type PreviewState = {
 const defaultPage = {
     name: "HOME",
     href: "/",
-    hint: "还没写"
+    hint: "当前页面提示，未完成"
 };
 
 export const usePreviewStore = create<PreviewState>((set) => ({

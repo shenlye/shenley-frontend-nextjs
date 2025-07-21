@@ -1,7 +1,8 @@
+import { Card } from "@/components/ui/data-display/card";
 export default function Projects() {
     return (
-        <div>
-            <h2>新建文件夹</h2>
-        </div>
+        <Card className="w-full h-full flex items-center justify-center">
+            占位
+        </Card>
     );
 }

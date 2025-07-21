@@ -13,7 +13,7 @@ const SocialIcon = ({ href, icon, className = '' }: SocialIconProps) => {
   return (
     <motion.div className={`icon ${className}`}>
       <a href={href} target="_blank" rel="noopener noreferrer">
-        <Icon icon={icon} className="w-6 h-6 hover:text-primary transition-colors" />
+        <Icon icon={icon} className="w-5 h-5 hover:text-primary transition-colors" />
       </a>
     </motion.div>
   );
