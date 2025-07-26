@@ -19,7 +19,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header className="mb-4"/>
-          <main className="md:max-w-4xl mx-auto px-2 md:px-0 perspective-midrange relative">
+          <main className="md:max-w-7xl mx-auto px-2 md:px-0 perspective-midrange relative">
             <PageTransition>
               {children}
             </PageTransition>

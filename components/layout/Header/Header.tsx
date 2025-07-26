@@ -9,10 +9,10 @@ type HeaderProps = {
 
 export default function Header({ className = "", maxWidth = "md:max-w-4xl" }: HeaderProps) {
   return (
-    <header className={`flex flex-col max-w-4xl mx-auto ${className}`}>
+    <header className={`flex flex-col max-w-7xl mx-auto ${className}`}>
       <Banner />
       <div className={clsx("w-full md:px-0 px-2 flex flex-col items-center", maxWidth && "mx-auto")}>
-        <ProfileCard className="max-w-4xl w-full"/>
+        <ProfileCard className="max-w-7xl w-full"/>
       </div>
     </header>
   );

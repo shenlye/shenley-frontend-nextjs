@@ -6,11 +6,8 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
-      style={{
-        clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)'
-      }}
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 border py-6 shadow-sm relative pl-4",
+        "bg-card/50 text-card-foreground flex flex-col gap-6 border py-6 shadow-sm relative pl-4",
         className
       )}
       {...props}
