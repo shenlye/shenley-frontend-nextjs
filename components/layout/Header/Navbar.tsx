@@ -23,28 +23,28 @@ export default function Navbar() {
 
     return (
         <nav className="w-full max-w-4xl">
-            <div className="flex gap-4 justify-start">
-                {navItems.map((item, index) => (
-                    <Link 
-                        ref={el => {
-                            navRefs.current[index] = el;
-                        }}
-                        href={item.href} 
-                        key={item.name}
-                        className={cn(
-                            "relative py-4 px-2 -mb-0.5 text-sm font-medium transition-colors",
-                            "after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-transparent after:w-0 after:transition-all after:duration-300",
-                            "hover:after:w-full hover:after:bg-primary",
-                            currentPage.href === item.href && "text-primary"
-                        )}
-                        onMouseEnter={() => setHoverItem(item)}
-                        onMouseLeave={() => setHoverItem(null)}
-                        onClick={() => setCurrentPage(item)}
-                    >
-                        {item.name}
-                    </Link>
-                ))}
-            </div>
-        </nav>
+                <div className="flex gap-4 justify-start">
+                    {navItems.map((item, index) => (
+                        <Link
+                            ref={el => {
+                                navRefs.current[index] = el;
+                            }}
+                            href={item.href}
+                            key={item.name}
+                            className={cn(
+                                "relative py-4 px-2 -mb-0.5 text-sm font-medium transition-colors",
+                                "after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-transparent after:w-0 after:transition-all after:duration-300",
+                                "hover:after:w-full hover:after:bg-primary hover:text-primary",
+                                currentPage.href === item.href && "text-primary"
+                            )}
+                            onMouseEnter={() => setHoverItem(item)}
+                            onMouseLeave={() => setHoverItem(null)}
+                            onClick={() => setCurrentPage(item)}
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
+                </div>
+            </nav>
     );
 }

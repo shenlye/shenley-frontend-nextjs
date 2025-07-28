@@ -106,7 +106,7 @@ export default function CollectionList({
 
   if (items.length === 0 && loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-2">
+      <div className="flex flex-col gap-3">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
@@ -132,14 +132,11 @@ export default function CollectionList({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-2">
+      <div className="flex flex-col gap-3">
         {items.map((item, index) => (
           <div
             key={item.id}
             ref={updateItemRef(index)}
-            style={{
-            clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)'
-            }}
             className="border p-4 hover:bg-accent bg-card transition-colors duration-200 flex flex-col"
           >
             <div className="flex">

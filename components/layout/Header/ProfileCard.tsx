@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import SocialIcons from "@/components/common/SocialIcons";
+import SocialIcons from "@/components/layout/Header/SocialIcons";
 import clsx from "clsx";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";

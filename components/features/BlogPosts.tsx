@@ -50,7 +50,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
   }, { scope: postsContainerRef });
 
   return (
-    <div ref={postsContainerRef} className="grid gap-3 md:grid-cols-2">
+    <div ref={postsContainerRef} className="flex flex-col gap-3">
       {posts.map((post, index) => (
         <a
           key={post.id}

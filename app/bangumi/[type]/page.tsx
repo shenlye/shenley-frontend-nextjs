@@ -119,13 +119,13 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="mx-auto">
       <Tabs
         value={activeStatus}
         onValueChange={handleStatusChange}
         className="mb-6"
       >
-        <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto">
+        <TabsList className="w-2xs">
           <TabsTrigger value="collect">{labels.collect}</TabsTrigger>
           <TabsTrigger value="wish">{labels.wish}</TabsTrigger>
           <TabsTrigger value="doing">{labels.doing}</TabsTrigger>

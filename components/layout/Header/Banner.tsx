@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 import { usePreviewStore } from "@/stores/usePreviewStore";
 import gsap from "gsap";
+import { cn } from "@/lib/utils";
 
-export default function Banner() {
+export default function Banner({ className = "" }: { className?: string }) {
   const { theme, setTheme } = useTheme();
   const { currentPage, hoverItem } = usePreviewStore();
   const titleRef = useRef<HTMLDivElement>(null);
@@ -61,7 +62,7 @@ export default function Banner() {
   }, [currentPage, hoverItem]);
 
   return (
-    <div className="h-15 flex items-center p-2 overflow-hidden md:px-0 justify-between sticky top-0 z-50 bg-background/50 backdrop-blur-md">
+    <div className={cn("h-15 flex items-center overflow-hidden justify-between sticky top-0 z-50 bg-background/50 backdrop-blur-md", className)}>
       <div className="flex items-center justify-between h-full">
         <div className="bg-foreground w-1 h-full flex-shrink-0" />
         <div className="ml-2 overflow-hidden">

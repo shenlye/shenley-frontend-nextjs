@@ -48,9 +48,4 @@ export const navItems: NavItem[] = [
         href: "/bangumi/anime",
         hint: "动画收藏，还没完善"
     },
-    {
-        name: "ABOUT",
-        href: "/about",
-        hint: "关于我，还没完善"
-    }
 ];
