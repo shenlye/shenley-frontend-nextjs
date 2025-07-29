@@ -6,7 +6,7 @@ import { usePreviewStore, navItems } from "@/stores/usePreviewStore";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ className = "" }: { className?: string }) {
     const { setHoverItem, currentPage, setCurrentPage } = usePreviewStore();
     const navRefs = useRef<Array<HTMLAnchorElement | null>>([]);
     const path = usePathname();
@@ -22,7 +22,7 @@ export default function Navbar() {
     }, [path, setCurrentPage]);
 
     return (
-        <nav className="w-full max-w-4xl">
+        <nav className={cn("", className)}>
                 <div className="flex gap-4 justify-start">
                     {navItems.map((item, index) => (
                         <Link

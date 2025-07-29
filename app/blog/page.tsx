@@ -1,4 +1,4 @@
-import BlogPosts from "@/components/features/BlogPosts";
+import BlogPosts from "@/components/BlogPosts";
 
 interface BlogPost {
   id: string;

@@ -62,7 +62,7 @@ export default function Banner({ className = "" }: { className?: string }) {
   }, [currentPage, hoverItem]);
 
   return (
-    <div className={cn("h-15 flex items-center overflow-hidden justify-between sticky top-0 z-50 bg-background/50 backdrop-blur-md", className)}>
+    <div className={cn("h-15 flex items-center overflow-hidden justify-between sticky top-0 z-50 w-full", className)}>
       <div className="flex items-center justify-between h-full">
         <div className="bg-foreground w-1 h-full flex-shrink-0" />
         <div className="ml-2 overflow-hidden">

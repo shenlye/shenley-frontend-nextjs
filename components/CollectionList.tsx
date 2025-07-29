@@ -25,7 +25,7 @@ const PaginationButton = ({
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`px-3 py-1 border text-sm ${
+    className={`px-3 py-1 border text-sm rounded-2xl ${
       active
         ? 'bg-primary text-primary-foreground border-primary'
         : 'border-input hover:bg-accent hover:text-accent-foreground'
@@ -106,7 +106,7 @@ export default function CollectionList({
 
   if (items.length === 0 && loading) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 rounded-2xl">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
@@ -132,12 +132,12 @@ export default function CollectionList({
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 rounded-2xl">
         {items.map((item, index) => (
           <div
             key={item.id}
             ref={updateItemRef(index)}
-            className="border p-4 hover:bg-accent bg-card transition-colors duration-200 flex flex-col"
+            className="border p-4 hover:bg-accent bg-card transition-colors duration-200 rounded-2xl flex flex-col"
           >
             <div className="flex">
               <Link

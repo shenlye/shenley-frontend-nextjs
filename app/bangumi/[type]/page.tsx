@@ -1,9 +1,9 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/navigation/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { BangumiSubject } from "@/types/bangumi";
 import { CollectionStatus } from "@/types/bangumi";
-import CollectionList from "@/components/ui/data-display/CollectionList";
+import CollectionList from "@/components/CollectionList";
 import { Suspense, use, useState, useEffect } from "react";
 import { notFound, useSearchParams, useRouter } from "next/navigation";
 import { getUserCollectionsByStatus } from "@/lib/bangumi";
@@ -125,10 +125,10 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
         onValueChange={handleStatusChange}
         className="mb-6"
       >
-        <TabsList className="w-2xs">
-          <TabsTrigger value="collect">{labels.collect}</TabsTrigger>
-          <TabsTrigger value="wish">{labels.wish}</TabsTrigger>
-          <TabsTrigger value="doing">{labels.doing}</TabsTrigger>
+        <TabsList className="w-2xs rounded-2xl">
+          <TabsTrigger className="rounded-2xl" value="collect">{labels.collect}</TabsTrigger>
+          <TabsTrigger className="rounded-2xl" value="wish">{labels.wish}</TabsTrigger>
+          <TabsTrigger className="rounded-2xl" value="doing">{labels.doing}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="collect">

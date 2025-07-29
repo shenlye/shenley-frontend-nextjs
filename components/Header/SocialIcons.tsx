@@ -1,7 +1,7 @@
 'use client';
 
 import { Icon } from "@iconify/react";
-import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 interface SocialIconProps {
   href: string;
@@ -11,11 +11,11 @@ interface SocialIconProps {
 
 const SocialIcon = ({ href, icon, className = '' }: SocialIconProps) => {
   return (
-    <motion.div className={`icon ${className}`}>
+    <div className={cn("icon", className)}>
       <a href={href} target="_blank" rel="noopener noreferrer">
         <Icon icon={icon} className="w-5 h-5 hover:text-primary transition-colors" />
       </a>
-    </motion.div>
+    </div>
   );
 };
 
@@ -39,7 +39,7 @@ export default function SocialIcons({
   ]
 }: SocialIconsProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={cn("flex items-center gap-2", className)}>
       {icons.map((item, index) => (
         <SocialIcon 
           key={index} 
