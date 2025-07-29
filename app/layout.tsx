@@ -1,7 +1,15 @@
 import "./globals.css";
+import "./font/Blueaka/Blueaka.css";
+import "./font/Blueaka_Bold/Blueaka_Bold.css";
+import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import React from "react";
 import Header from "@/components/Header/Header";
+
+export const metadata: Metadata = {
+  title: "Shenley的个人主页",
+  description: "Shenley的个人主页",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -9,15 +17,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className="antialiased mx-auto">
+      <body className={`font-['Blueaka'] antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header className="mb-5" />
-          <main className="px-2 md:px-0 max-w-2xl mx-auto">{children}</main>
+          <Header />
+          <main className="mt-5 max-w-2xl mx-auto">{children}</main>
         </ThemeProvider>
       </body>
     </html>
