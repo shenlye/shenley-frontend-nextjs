@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -52,16 +53,15 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
   return (
     <div ref={postsContainerRef} className="flex flex-col gap-3">
       {posts.map((post, index) => (
-        <a
+        <Link
           key={post.id}
           ref={(el) => {
             if (el) {
               postRefs.current[index] = el;
             }
           }}
-          href={post.id}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={post.link}
+          scroll={false}
           className="block hover:no-underline opacity-0"
         >
           <Card className="h-full flex flex-col shadow-none hover:bg-accent transition-colors">
@@ -79,7 +79,7 @@ export default function BlogPosts({ posts }: BlogPostsProps) {
               </p>
             </CardContent>
           </Card>
-        </a>
+        </Link>
       ))}
     </div>
   );

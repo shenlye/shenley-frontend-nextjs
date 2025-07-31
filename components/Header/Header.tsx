@@ -11,7 +11,7 @@ export default function Header({ className = "" }: HeaderProps) {
   return (
     <header
       className={cn(
-        "flex flex-col justify-between mx-auto md:px-0 px-2 bg-[url('/images/background.jpg')] bg-cover bg-center h-screen items-center",
+        "flex flex-col justify-between mx-auto md:px-0 px-2 bg-[url('/images/background.jpg')] bg-cover bg-center items-center",
         className
       )}
     >

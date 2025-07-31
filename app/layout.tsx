@@ -24,8 +24,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="mt-5 max-w-2xl mx-auto">{children}</main>
+          <Header className="h-[50vh]"/>
+          <main className="mt-5 max-w-2xl mx-auto px-4 md:px-0">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>
