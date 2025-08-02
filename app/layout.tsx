@@ -17,15 +17,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className={`font-['Blueaka'] antialiased`}>
+      <body className={`font-['Blueaka'] antialiased flex flex-col min-h-screen`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header className="h-[50vh]"/>
-          <main className="mt-5 max-w-2xl mx-auto px-4 md:px-0">
+          <Header className="" />
+          <main className="max-w-4xl mx-auto px-4 md:px-0 flex-1 flex flex-col justify-center items-center gap-4">
             {children}
           </main>
         </ThemeProvider>

@@ -73,15 +73,30 @@ function formatDate(dateString: string) {
 }
 
 const LoadingState = () => (
-  <div className="w-full max-w-2xl mx-auto p-6 bg-card rounded-lg shadow-md animate-pulse">
-    <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
-    <div className="h-4 bg-muted rounded w-1/2 mb-6"></div>
-    <div className="space-y-4">
+  <div className="w-full max-w-xl text-card-foreground flex flex-col">
+    <div className="mb-6 flex justify-start items-stretch gap-2">
+      <div className="h-7 bg-muted animate-pulse w-28"></div>
+      <div className="h-7 bg-muted animate-pulse w-48"></div>
+    </div>
+
+    <div className="flex gap-4 mb-6 text-left">
+      <div>
+        <div className="h-7 w-20 bg-muted animate-pulse mb-1"></div>
+        <div className="h-3 w-16 bg-muted animate-pulse"></div>
+      </div>
+      <div>
+        <div className="h-7 w-20 bg-muted animate-pulse mb-1"></div>
+        <div className="h-3 w-20 bg-muted animate-pulse"></div>
+      </div>
+    </div>
+
+    <div className="space-y-1">
       {[...Array(7)].map((_, i) => (
-        <div
-          key={i}
-          className="h-6 bg-muted rounded"
-        ></div>
+        <div key={i} className="flex items-center space-x-2 text-sm">
+          <div className="w-20 h-4 bg-muted animate-pulse"></div>
+          <div className="flex-1 bg-muted h-2.5 animate-pulse"></div>
+          <div className="w-24 h-4 bg-muted animate-pulse"></div>
+        </div>
       ))}
     </div>
   </div>
@@ -100,21 +115,20 @@ const LanguageBar = ({
   name,
   percent,
   text,
-  color,
 }: {
   name: string;
   percent: number;
   text: string;
   color: string;
 }) => (
-  <div className="flex items-center space-x-4 text-sm">
-    <div className="w-28 truncate text-muted-foreground">
+  <div className="flex items-center space-x-2 text-sm">
+    <div className="w-20 truncate text-muted-foreground">
       {name}
     </div>
-    <div className="flex-1 bg-muted rounded-full h-2.5">
+    <div className="flex-1 bg-muted h-2.5">
       <div
-        className="h-2.5 rounded-full"
-        style={{ width: `${percent}%`, backgroundColor: color }}
+        className="h-2.5 bg-foreground"
+        style={{ width: `${percent}%` }}
       ></div>
     </div>
     <div className="w-28 text-right text-foreground font-medium">
@@ -138,39 +152,43 @@ export default function Wakatime() {
   const topLanguages = languages.data.slice(0, 7);
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-card text-card-foreground rounded-2xl shadow-lg border">
-      <div className="border-b pb-4 mb-4">
-        <h2 className="text-xl font-bold text-foreground">
+    <div className="w-full max-w-xl text-card-foreground flex flex-col">
+      <div className="mb-6 flex justify-start items-stretch gap-2">
+        <div className="text-sm font-bold text-background bg-foreground py-1 pl-2 md:pr-8 pr-4">
           编程语言统计
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          自 {startDate} 开始，实际编码 {codingDays} 天
-        </p>
+        </div>
+        <div className="text-sm bg-primary text-foreground py-1 pl-2 md:pr-8 pr-4">
+          {startDate} 起，实际编程 {codingDays} 天
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6 text-center">
+      <div className="flex gap-4 mb-6 text-left">
         <div>
           <div className="text-xl font-semibold text-foreground">
             {totalTime}
           </div>
-          <div className="text-xs text-muted-foreground">
-            总编码时长
-          </div>
+          <div className="text-xs text-muted-foreground">总编码时长</div>
         </div>
         <div>
           <div className="text-xl font-semibold text-foreground">
             {dailyAverage}
           </div>
-          <div className="text-xs text-muted-foreground">
-            平均每日时长
-          </div>
+          <div className="text-xs text-muted-foreground">平均每日时长</div>
         </div>
       </div>
 
-      <div className="space-y-3">
-        {topLanguages.map((lang) => (
-          <LanguageBar key={lang.name} {...lang} />
-        ))}
+      <div className="space-y-1">
+        {topLanguages.map((lang) => {
+          const maxPercent = Math.max(...topLanguages.map(l => l.percent));
+          const relativePercent = (lang.percent / maxPercent) * 100;
+          return (
+            <LanguageBar 
+              key={lang.name} 
+              {...lang} 
+              percent={relativePercent}
+            />
+          );
+        })}
       </div>
     </div>
   );

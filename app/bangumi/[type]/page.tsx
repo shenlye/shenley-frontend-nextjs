@@ -125,10 +125,10 @@ function BangumiPageContent({ type }: { type: "anime" | "game" }) {
         onValueChange={handleStatusChange}
         className="mb-6"
       >
-        <TabsList className="w-2xs rounded-2xl">
-          <TabsTrigger className="rounded-2xl" value="collect">{labels.collect}</TabsTrigger>
-          <TabsTrigger className="rounded-2xl" value="wish">{labels.wish}</TabsTrigger>
-          <TabsTrigger className="rounded-2xl" value="doing">{labels.doing}</TabsTrigger>
+        <TabsList className="w-2xs">
+          <TabsTrigger className="" value="collect">{labels.collect}</TabsTrigger>
+          <TabsTrigger className="" value="wish">{labels.wish}</TabsTrigger>
+          <TabsTrigger className="" value="doing">{labels.doing}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="collect">

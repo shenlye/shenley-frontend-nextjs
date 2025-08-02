@@ -106,7 +106,7 @@ export default function CollectionList({
 
   if (items.length === 0 && loading) {
     return (
-      <div className="flex flex-col gap-3 rounded-2xl">
+      <div className="flex flex-col gap-3">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
@@ -132,12 +132,12 @@ export default function CollectionList({
 
   return (
     <>
-      <div className="flex flex-col gap-3 rounded-2xl">
+      <div className="flex flex-col gap-3">
         {items.map((item, index) => (
           <div
             key={item.id}
             ref={updateItemRef(index)}
-            className="border p-4 hover:bg-accent bg-card transition-colors duration-200 rounded-2xl flex flex-col"
+            className="border p-4 hover:bg-accent bg-card transition-colors duration-200 flex flex-col"
           >
             <div className="flex">
               <Link
